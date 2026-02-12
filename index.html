@@ -2,98 +2,117 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ek Sawal...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ek Sawal... ❤️</title>
     <style>
+        /* Reset and Base Styles */
+        * { box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; /* min-height use kiya taaki content kat na jaye */
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background Animation */
+        .heart-bg {
+            position: absolute;
+            width: 20px; height: 20px;
+            background: rgba(255, 71, 87, 0.2);
+            transform: rotate(45deg);
+            animation: float 10s infinite linear;
+            z-index: 1;
+        }
+        .heart-bg::before, .heart-bg::after {
+            content: ''; position: absolute;
+            width: 20px; height: 20px;
+            background: rgba(255, 71, 87, 0.2);
+            border-radius: 50%;
+        }
+        .heart-bg::before { top: -10px; left: 0; }
+        .heart-bg::after { top: 0; left: -10px; }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(45deg) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(45deg) scale(1); opacity: 0; }
+        }
+
+        /* Main Card Styling */
+        .card {
+            background: rgba(255, 255, 255, 0.95); /* Thoda transparent */
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 90%;
+            width: 380px;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px); /* Glass effect */
+        }
+
+        h1 { color: #ff4757; font-size: 26px; margin-bottom: 8px; }
+        p#mainText { color: #555; font-size: 17px; margin-bottom: 25px; min-height: 24px; font-weight: 500; }
+
+        .gif-container img {
+            width: 140px; height: auto;
+            border-radius: 15px; margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Button Styling */
+        .btn-group {
+            position: relative;
+            height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Scroll band karne ke liye */
-        }
-
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 90%;
-            width: 400px;
-            position: relative;
-            z-index: 10;
-        }
-
-        h1 {
-            color: #ff4757;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #555;
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .gif-container img {
-            width: 150px;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .btn-group {
-            position: relative;
-            height: 60px; /* Space button movement ke liye */
         }
 
         button {
-            padding: 12px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            outline: none;
+            padding: 12px 25px;
+            font-size: 17px;
+            border: none; border-radius: 50px;
+            cursor: pointer; outline: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         #yesBtn {
-            background-color: #2ed573;
-            color: white;
+            background-color: #2ed573; color: white;
             box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
-            margin-right: 15px;
-        }
-
-        #yesBtn:hover {
-            transform: scale(1.05);
+            margin-right: 10px;
+            z-index: 2; /* Yes button upar rahega */
         }
 
         #noBtn {
-            background-color: #ff4757;
-            color: white;
+            background-color: #ff4757; color: white;
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-            position: absolute; /* Bhaagne ke liye absolute zaroori hai */
+            position: absolute; /* Absolute positioning zaroori hai bhaagne ke liye */
         }
 
-        /* Message jo baad me dikhega */
-        #successMessage {
-            display: none;
-            text-align: center;
-        }
-        
-        #successMessage h2 {
-            color: #2ed573;
-            font-size: 32px;
+        /* Success Message Styling */
+        #successMessage { display: none; }
+        #successMessage h2 { color: #2ed573; font-size: 30px; }
+
+        /* --- Mobile Optimized (Zoom Issue Fix) --- */
+        @media (max-width: 480px) {
+            .card { padding: 25px 20px; width: 92%; }
+            h1 { font-size: 22px; }
+            p#mainText { font-size: 15px; }
+            .gif-container img { width: 120px; }
+            button { padding: 10px 20px; font-size: 15px; }
         }
     </style>
 </head>
 <body>
+
+    <div id="bg-hearts"></div>
 
     <div class="card" id="mainCard">
         <div class="gif-container">
@@ -101,11 +120,11 @@
         </div>
         
         <h1>Gussa khatam? 🥺</h1>
-        <p>Plzzzz maan jao na... ek smile?</p>
+        <p id="mainText">Plzzzz maan jao na... ek smile?</p>
 
         <div class="btn-group">
             <button id="yesBtn" onclick="acceptApology()">Haa, Maan gayi! ❤️</button>
-            <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">Nahi 😤</button>
+            <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" ontouchmove="moveButton()">Nahi 😤</button>
         </div>
     </div>
 
@@ -113,59 +132,100 @@
         <div class="gif-container">
             <img src="https://media.giphy.com/media/TdfyKrN7HGTIY/giphy.gif" alt="Happy Gif">
         </div>
-        <h2>I Knew It! ❤️</h2>
-        <p>Chalo ab jaldi se reply karo! Love you! 😘</p>
+        <h2>Yayy! I Knew It! ❤️</h2>
+        <p>Love you sooooo much! 😘<br>Ab jaldi reply karo!</p>
     </div>
 
     <script>
-        function moveButton() {
-            var x = Math.random() * (window.innerWidth - 100);
-            var y = Math.random() * (window.innerHeight - 100);
+        // --- Background Hearts Generation ---
+        function createBgHearts() {
+            const container = document.getElementById('bg-hearts');
+            for (let i = 0; i < 15; i++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = '-' + (Math.random() * 10) + 's';
+                container.appendChild(heart);
+            }
+        }
+        createBgHearts();
+
+
+        // --- Interaction Logic ---
+        let noClickCount = 0;
+        // Yeh messages change honge jab wo 'Nahi' dabane ki koshish karengi
+        const messages = [
+            "Arey pakka? Soch lo fir se! 🤔",
+            "Itna bhav khaogi? Dil toot jayega mera 💔",
+            "Pls baby maan jao na... rona aa raha hai 😭",
+            "Bhagwan dekh raha hai! Gunaah lagega! 🥺",
+            "Ab toh 'Yes' daba do meri jaan! 😡"
+        ];
+
+        function moveButton(e) {
+            // Agar touch event hai to default action roko taaki scroll na ho
+            if (e && e.preventDefault) { e.preventDefault(); }
+
+            // Button ko screen ke andar safe area mein random jagah bhejna
+            const noBtn = document.getElementById('noBtn');
+            // Button ka size aur thoda padding minus kar rahe hain taaki screen se bahar na jaye
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20; 
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
-            var btn = document.getElementById('noBtn');
+            // Kam se kam 20px dur rahe edge se
+            const x = Math.max(20, Math.random() * maxX);
+            const y = Math.max(20, Math.random() * maxY);
             
-            // Button ko screen ke andar rakhne ke liye logic
-            // Hum button ki position 'fixed' karke screen pe kahi bhi bhej denge
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // --- New Interaction Features ---
+            
+            // 1. Text Change karna
+            const textElement = document.getElementById('mainText');
+            if (noClickCount < messages.length) {
+                textElement.innerText = messages[noClickCount];
+                textElement.style.color = "#ff4757"; // Text ka color thoda red kar diya
+                noClickCount++;
+            }
+
+            // 2. 'Yes' button ko bada karna
+            const yesBtn = document.getElementById('yesBtn');
+            let currentSize = window.getComputedStyle(yesBtn).fontSize;
+            let newSize = parseFloat(currentSize) * 1.1; // Har baar 10% bada hoga
+            // Zada bada na ho jaye isliye limit lagayi hai (max 40px)
+            if (newSize < 40) {
+                 yesBtn.style.fontSize = newSize + 'px';
+                 // Thoda padding bhi badhayenge
+                 let currentPad = window.getComputedStyle(yesBtn).padding;
+                 yesBtn.style.padding = (parseFloat(currentPad) * 1.05) + 'px ' + (parseFloat(currentPad.split(' ')[1]) * 1.08) + 'px';
+            }
         }
 
         function acceptApology() {
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
-            
-            // Optional: Confetti effect (simple logic)
-            createConfetti();
+            createConfetti(); // Confetti function (same as before)
         }
 
-        // Simple CSS confetti effect ke liye
+        // Confetti Effect (Same as previous version)
         function createConfetti() {
             const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502'];
-            
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.position = 'fixed';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
+                confetti.style.width = '10px'; height = '10px';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.top = '-10px';
                 confetti.style.zIndex = '1000';
                 confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
-                
                 document.body.appendChild(confetti);
             }
-            
-            // Add style for animation dynamically
             const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes fall {
-                    to {
-                        transform: translateY(100vh) rotate(720deg);
-                    }
-                }
-            `;
+            style.innerHTML = `@keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }`;
             document.head.appendChild(style);
         }
     </script>
