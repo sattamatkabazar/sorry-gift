@@ -1,112 +1,116 @@
 <!DOCTYPE html>
-<html lang="hi">
-<head>
+<html lang="mr"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ek Sawal... ❤️</title>
     <style>
         /* Reset and Base Styles */
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             margin: 0; padding: 0;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; /* min-height use kiya taaki content kat na jaye */
+            min-height: 100vh;
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
             overflow: hidden;
             position: relative;
         }
 
-        /* Floating Hearts Background Animation */
+        /* Background Animation */
         .heart-bg {
             position: absolute;
             width: 20px; height: 20px;
-            background: rgba(255, 71, 87, 0.2);
+            background: rgba(255, 71, 87, 0.15);
             transform: rotate(45deg);
-            animation: float 10s infinite linear;
+            animation: float 12s infinite linear;
             z-index: 1;
+            pointer-events: none; /* Background click block na kare */
         }
         .heart-bg::before, .heart-bg::after {
             content: ''; position: absolute;
             width: 20px; height: 20px;
-            background: rgba(255, 71, 87, 0.2);
+            background: rgba(255, 71, 87, 0.15);
             border-radius: 50%;
         }
         .heart-bg::before { top: -10px; left: 0; }
         .heart-bg::after { top: 0; left: -10px; }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(45deg) scale(0.5); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(45deg) scale(1); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(45deg) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(45deg) scale(1.2); opacity: 0; }
         }
 
         /* Main Card Styling */
         .card {
-            background: rgba(255, 255, 255, 0.95); /* Thoda transparent */
-            padding: 35px;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 35px 30px;
             border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
             max-width: 90%;
             width: 380px;
             position: relative;
             z-index: 10;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px); /* Glass effect */
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
         }
 
-        h1 { color: #ff4757; font-size: 26px; margin-bottom: 8px; }
-        p#mainText { color: #555; font-size: 17px; margin-bottom: 25px; min-height: 24px; font-weight: 500; }
+        h1 { color: #ff4757; font-size: 28px; margin: 0 0 15px 0; line-height: 1.2; }
+        p#mainText { color: #555; font-size: 18px; margin-bottom: 30px; min-height: 24px; font-weight: 500; }
 
         .gif-container img {
-            width: 140px; height: auto;
-            border-radius: 15px; margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%; max-width: 160px; height: auto;
+            border-radius: 15px; margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         /* Button Styling */
         .btn-group {
-            position: relative;
-            height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 15px; /* Buttons ke beech space */
+            margin-top: 10px;
+            min-height: 60px;
         }
 
         button {
-            padding: 12px 25px;
-            font-size: 17px;
+            padding: 14px 32px;
+            font-size: 18px;
             border: none; border-radius: 50px;
             cursor: pointer; outline: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+            white-space: nowrap;
+            position: relative; /* Initial positioning fix */
         }
 
         #yesBtn {
             background-color: #2ed573; color: white;
-            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
-            margin-right: 10px;
-            z-index: 2; /* Yes button upar rahega */
+            box-shadow: 0 6px 20px rgba(46, 213, 115, 0.3);
+            z-index: 2;
         }
+        #yesBtn:active { transform: scale(0.95); }
 
         #noBtn {
             background-color: #ff4757; color: white;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-            position: absolute; /* Absolute positioning zaroori hai bhaagne ke liye */
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.3);
+            z-index: 3; /* Ensure it's on top to detect touch */
         }
 
-        /* Success Message Styling */
+        /* Success Message */
         #successMessage { display: none; }
-        #successMessage h2 { color: #2ed573; font-size: 30px; }
+        #successMessage h2 { color: #2ed573; font-size: 32px; margin-top: 0; }
 
-        /* --- Mobile Optimized (Zoom Issue Fix) --- */
+        /* --- Mobile Optimization Fixes --- */
         @media (max-width: 480px) {
-            .card { padding: 25px 20px; width: 92%; }
-            h1 { font-size: 22px; }
-            p#mainText { font-size: 15px; }
-            .gif-container img { width: 120px; }
-            button { padding: 10px 20px; font-size: 15px; }
+             /* Mobile par card thoda bada aur fonts readable kiye */
+            .card { padding: 30px 25px; width: 94%; }
+            h1 { font-size: 26px; margin-bottom: 12px; }
+            p#mainText { font-size: 17px; margin-bottom: 25px; }
+            .gif-container img { max-width: 140px; }
+            button { padding: 12px 28px; font-size: 17px; }
         }
     </style>
 </head>
@@ -116,15 +120,15 @@
 
     <div class="card" id="mainCard">
         <div class="gif-container">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3LvMWF4OGFjy3J6b3g1a3lza3lz/MDJ5Yzc5MGI3NjEx/26BRv0ThflsKCqLxK/giphy.gif" alt="Cute Sorry Gif">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3BlajVzNnZ6b2FwYTBoZ3g2OGpmOGlnb296a3l4a2s5eW1sYnI3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LpG9N2gqWb38Fesv2J/giphy.gif" alt="Cute Sad Bear">
         </div>
         
-        <h1>Gussa khatam? 🥺</h1>
+        <h1>Raag gela ka ata? 🥺</h1>
         <p id="mainText">Plzzzz maan jao na... ek smile?</p>
 
         <div class="btn-group">
-            <button id="yesBtn" onclick="acceptApology()">Haa, Maan gayi! ❤️</button>
-            <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" ontouchmove="moveButton()">Nahi 😤</button>
+            <button id="yesBtn" onclick="acceptApology()">Ho! ❤️</button>
+            <button id="noBtn" onmouseenter="moveButton(event)" ontouchstart="moveButton(event)">Nahi 😤</button>
         </div>
     </div>
 
@@ -137,95 +141,90 @@
     </div>
 
     <script>
-        // --- Background Hearts Generation ---
+        // --- Background Hearts ---
         function createBgHearts() {
             const container = document.getElementById('bg-hearts');
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 let heart = document.createElement('div');
                 heart.className = 'heart-bg';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
                 heart.style.animationDelay = '-' + (Math.random() * 10) + 's';
                 container.appendChild(heart);
             }
         }
         createBgHearts();
 
-
         // --- Interaction Logic ---
         let noClickCount = 0;
-        // Yeh messages change honge jab wo 'Nahi' dabane ki koshish karengi
         const messages = [
             "Arey pakka? Soch lo fir se! 🤔",
             "Itna bhav khaogi? Dil toot jayega mera 💔",
             "Pls baby maan jao na... rona aa raha hai 😭",
             "Bhagwan dekh raha hai! Gunaah lagega! 🥺",
-            "Ab toh 'Yes' daba do meri jaan! 😡"
+            "Ab toh 'Ho' daba do meri jaan! 😡"
         ];
 
         function moveButton(e) {
-            // Agar touch event hai to default action roko taaki scroll na ho
-            if (e && e.preventDefault) { e.preventDefault(); }
+            // Touch devices par scroll rokna
+            if (e && e.type === 'touchstart') { e.preventDefault(); }
 
-            // Button ko screen ke andar safe area mein random jagah bhejna
             const noBtn = document.getElementById('noBtn');
-            // Button ka size aur thoda padding minus kar rahe hain taaki screen se bahar na jaye
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20; 
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
-            // Kam se kam 20px dur rahe edge se
-            const x = Math.max(20, Math.random() * maxX);
-            const y = Math.max(20, Math.random() * maxY);
+            // FIX: Pehli baar move hone par position fixed karna
+            if (window.getComputedStyle(noBtn).position !== 'fixed') {
+                noBtn.style.position = 'fixed';
+                noBtn.style.zIndex = '1000'; // Ensure it's always on top when moving
+            }
+
+            // Calculate safe area
+            const maxX = window.innerWidth - noBtn.offsetWidth - 30; 
+            const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+            const x = Math.max(30, Math.random() * maxX);
+            const y = Math.max(30, Math.random() * maxY);
             
-            noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            // --- New Interaction Features ---
-            
-            // 1. Text Change karna
+            // Change Text and Grow Yes Button
             const textElement = document.getElementById('mainText');
             if (noClickCount < messages.length) {
                 textElement.innerText = messages[noClickCount];
-                textElement.style.color = "#ff4757"; // Text ka color thoda red kar diya
+                textElement.style.color = "#ff4757";
                 noClickCount++;
-            }
-
-            // 2. 'Yes' button ko bada karna
-            const yesBtn = document.getElementById('yesBtn');
-            let currentSize = window.getComputedStyle(yesBtn).fontSize;
-            let newSize = parseFloat(currentSize) * 1.1; // Har baar 10% bada hoga
-            // Zada bada na ho jaye isliye limit lagayi hai (max 40px)
-            if (newSize < 40) {
-                 yesBtn.style.fontSize = newSize + 'px';
-                 // Thoda padding bhi badhayenge
-                 let currentPad = window.getComputedStyle(yesBtn).padding;
-                 yesBtn.style.padding = (parseFloat(currentPad) * 1.05) + 'px ' + (parseFloat(currentPad.split(' ')[1]) * 1.08) + 'px';
+                
+                // Grow Yes button
+                const yesBtn = document.getElementById('yesBtn');
+                let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+                if (currentSize < 35) {
+                     yesBtn.style.fontSize = (currentSize * 1.1) + 'px';
+                     yesBtn.style.padding = `${14 + noClickCount*2}px ${32 + noClickCount*4}px`;
+                }
             }
         }
 
         function acceptApology() {
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
-            createConfetti(); // Confetti function (same as before)
+            createConfetti();
         }
 
-        // Confetti Effect (Same as previous version)
         function createConfetti() {
             const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502'];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 60; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.position = 'fixed';
-                confetti.style.width = '10px'; height = '10px';
+                confetti.style.width = '10px'; confetti.style.height = '10px';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-10px';
-                confetti.style.zIndex = '1000';
-                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.top = '-20px';
+                confetti.style.zIndex = '2000';
+                confetti.style.borderRadius = '50%';
+                confetti.style.animation = `fall ${Math.random() * 3 + 2.5}s linear forwards`;
                 document.body.appendChild(confetti);
             }
             const style = document.createElement('style');
-            style.innerHTML = `@keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }`;
+            style.innerHTML = `@keyframes fall { to { transform: translateY(105vh) rotate(720deg); opacity: 0; } }`;
             document.head.appendChild(style);
         }
     </script>
