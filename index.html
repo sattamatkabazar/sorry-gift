@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="mr"> <head>
+<html lang="mr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ek Sawal... ❤️</title>
+    <title>एक प्रश्न... ❤️</title>
     <style>
         /* Reset and Base Styles */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -24,7 +25,7 @@
             transform: rotate(45deg);
             animation: float 12s infinite linear;
             z-index: 1;
-            pointer-events: none; /* Background click block na kare */
+            pointer-events: none;
         }
         .heart-bg::before, .heart-bg::after {
             content: ''; position: absolute;
@@ -70,7 +71,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px; /* Buttons ke beech space */
+            gap: 15px;
             margin-top: 10px;
             min-height: 60px;
         }
@@ -81,9 +82,8 @@
             border: none; border-radius: 50px;
             cursor: pointer; outline: none;
             font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
-            position: relative; /* Initial positioning fix */
         }
 
         #yesBtn {
@@ -96,16 +96,15 @@
         #noBtn {
             background-color: #ff4757; color: white;
             box-shadow: 0 6px 20px rgba(255, 71, 87, 0.3);
-            z-index: 3; /* Ensure it's on top to detect touch */
+            z-index: 3;
         }
 
         /* Success Message */
         #successMessage { display: none; }
         #successMessage h2 { color: #2ed573; font-size: 32px; margin-top: 0; }
 
-        /* --- Mobile Optimization Fixes --- */
+        /* Mobile Fixes */
         @media (max-width: 480px) {
-             /* Mobile par card thoda bada aur fonts readable kiye */
             .card { padding: 30px 25px; width: 94%; }
             h1 { font-size: 26px; margin-bottom: 12px; }
             p#mainText { font-size: 17px; margin-bottom: 25px; }
@@ -123,12 +122,12 @@
             <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3BlajVzNnZ6b2FwYTBoZ3g2OGpmOGlnb296a3l4a2s5eW1sYnI3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LpG9N2gqWb38Fesv2J/giphy.gif" alt="Cute Sad Bear">
         </div>
         
-        <h1>Raag gela ka ata? 🥺</h1>
-        <p id="mainText">Plzzzz maan jao na... ek smile?</p>
+        <h1>राग गेला का आता? 🥺</h1>
+        <p id="mainText">Plzzzz मान जा ना... एक स्माईल?</p>
 
         <div class="btn-group">
-            <button id="yesBtn" onclick="acceptApology()">Ho! ❤️</button>
-            <button id="noBtn" onmouseenter="moveButton(event)" ontouchstart="moveButton(event)">Nahi 😤</button>
+            <button id="yesBtn" onclick="acceptApology()">हो! ❤️</button>
+            <button id="noBtn" onmouseenter="moveButton(event)" ontouchstart="moveButton(event)">नाही 😤</button>
         </div>
     </div>
 
@@ -136,8 +135,8 @@
         <div class="gif-container">
             <img src="https://media.giphy.com/media/TdfyKrN7HGTIY/giphy.gif" alt="Happy Gif">
         </div>
-        <h2>Yayy! I Knew It! ❤️</h2>
-        <p>Love you sooooo much! 😘<br>Ab jaldi reply karo!</p>
+        <h2>Yayy! मला माहित होतं! ❤️</h2>
+        <p>Love you sooooo much! 😘<br>आता लवकर रिप्लाय कर!</p>
     </div>
 
     <script>
@@ -155,29 +154,26 @@
         }
         createBgHearts();
 
-        // --- Interaction Logic ---
+        // --- Interaction Logic (Marathi Messages) ---
         let noClickCount = 0;
         const messages = [
-            "Arey pakka? Soch lo fir se! 🤔",
-            "Itna bhav khaogi? Dil toot jayega mera 💔",
-            "Pls baby maan jao na... rona aa raha hai 😭",
-            "Bhagwan dekh raha hai! Gunaah lagega! 🥺",
-            "Ab toh 'Ho' daba do meri jaan! 😡"
+            "अरे नक्की? पुन्हा विचार कर! 🤔",
+            "एवढा भाव खाणार? हार्ट तुटेल माझा 💔",
+            "Pls बेबी मान जा ना... रडू येतंय मला 😭",
+            "देव बघतोय हं! पाप लागेल! 🥺",
+            "आता तरी 'हो' म्हण की राणी! 😡"
         ];
 
         function moveButton(e) {
-            // Touch devices par scroll rokna
             if (e && e.type === 'touchstart') { e.preventDefault(); }
 
             const noBtn = document.getElementById('noBtn');
             
-            // FIX: Pehli baar move hone par position fixed karna
             if (window.getComputedStyle(noBtn).position !== 'fixed') {
                 noBtn.style.position = 'fixed';
-                noBtn.style.zIndex = '1000'; // Ensure it's always on top when moving
+                noBtn.style.zIndex = '1000';
             }
 
-            // Calculate safe area
             const maxX = window.innerWidth - noBtn.offsetWidth - 30; 
             const maxY = window.innerHeight - noBtn.offsetHeight - 30;
             const x = Math.max(30, Math.random() * maxX);
@@ -186,14 +182,12 @@
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            // Change Text and Grow Yes Button
             const textElement = document.getElementById('mainText');
             if (noClickCount < messages.length) {
                 textElement.innerText = messages[noClickCount];
                 textElement.style.color = "#ff4757";
                 noClickCount++;
                 
-                // Grow Yes button
                 const yesBtn = document.getElementById('yesBtn');
                 let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
                 if (currentSize < 35) {
